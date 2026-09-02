@@ -13,7 +13,7 @@
 
 | SW1 Port | Connects to | Mode  | Allowed VLANs | Native VLAN |
 |----------|-------------|-------|----------------|--------------|
-| Gig0/1   | SW2 Gig0/1  | trunk | 10, 20, 30     | 999 (unused) |
+| Gig0/1   | SW2 Gig0/1  | trunk | 10, 20, 30     | 1001 (unused) |
 
 ## SW2 access ports → end devices
 
@@ -27,8 +27,8 @@
 
 | SW2 Port | Connects to    | Mode  | Allowed VLANs | Native VLAN |
 |----------|----------------|-------|----------------|--------------|
-| Gig0/1   | SW1 Gig0/1     | trunk | 10, 20, 30     | 999 (unused) |
-| Gig0/2   | R1 Gig0/0      | trunk | 10, 20, 30     | 999 (unused) |
+| Gig0/1   | SW1 Gig0/1     | trunk | 10, 20, 30     | 1001 (unused) |
+| Gig0/2   | R1 Gig0/0      | trunk | 10, 20, 30     | 1001 (unused) |
 
 ## R1 (router-on-a-stick)
 
