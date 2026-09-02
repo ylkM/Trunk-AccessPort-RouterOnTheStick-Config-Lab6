@@ -1,0 +1,52 @@
+! ============================================
+! R1 Configuration -- Router-on-a-Stick
+! One physical trunk link to SW2, one subinterface per VLAN
+! ============================================
+
+enable
+configure terminal
+
+hostname R1
+
+! --- Parent interface: no IP, just needs to be up ---
+interface GigabitEthernet0/0
+ description Trunk link to SW2 Gig0/2
+ no ip address
+ no shutdown
+ exit
+
+! --- VLAN 10 gateway subinterface ---
+interface GigabitEthernet0/0.10
+ description Gateway for VLAN10 (10.0.0.0/26)
+ encapsulation dot1Q 10
+ ip address 10.0.0.62 255.255.255.192
+ exit
+
+! --- VLAN 20 gateway subinterface ---
+interface GigabitEthernet0/0.20
+ description Gateway for VLAN20 (10.0.0.64/26)
+ encapsulation dot1Q 20
+ ip address 10.0.0.126 255.255.255.192
+ exit
+
+! --- VLAN 30 gateway subinterface ---
+interface GigabitEthernet0/0.30
+ description Gateway for VLAN30 (10.0.0.128/26)
+ encapsulation dot1Q 30
+ ip address 10.0.0.190 255.255.255.192
+ exit
+
+! No subinterface created for native VLAN 999 -- it's unused/carries no host traffic.
+
+! No routing protocol needed -- all 3 subnets are directly connected on R1's
+! subinterfaces, so R1 already knows how to route between VLAN10 / 20 / 30.
+
+end
+write memory
+
+! ============================================
+! Verification commands
+! ============================================
+! show ip interface brief
+! show vlans   (shows dot1Q subinterface-to-VLAN mapping)
+! show ip route

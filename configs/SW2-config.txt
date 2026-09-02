@@ -1,0 +1,73 @@
+! ============================================
+! SW2 Configuration
+! Access ports for VLAN10 + VLAN20, trunk to SW1, trunk to R1
+! ============================================
+
+enable
+configure terminal
+
+hostname SW2
+
+! --- Create VLANs (all 3 + unused native, even though SW2 has no VLAN30 ports) ---
+vlan 10
+ name VLAN10
+ exit
+
+vlan 20
+ name VLAN20
+ exit
+
+vlan 30
+ name VLAN30
+ exit
+
+vlan 999
+ name NATIVE_UNUSED
+ exit
+
+! --- Access ports: VLAN10 PCs ---
+interface FastEthernet0/3
+ description PC3 (10.0.0.3)
+ switchport mode access
+ switchport access vlan 10
+ exit
+
+interface FastEthernet0/2
+ description PC4 (10.0.0.4)
+ switchport mode access
+ switchport access vlan 10
+ exit
+
+! --- Access port: VLAN20 PC ---
+interface FastEthernet0/1
+ description PC5 (10.0.0.65)
+ switchport mode access
+ switchport access vlan 20
+ exit
+
+! --- Trunk to SW1 ---
+interface GigabitEthernet0/1
+ description Trunk to SW1 Gig0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30
+ exit
+
+! --- Trunk to R1 (required for router-on-a-stick) ---
+interface GigabitEthernet0/2
+ description Trunk to R1 Gig0/0 (router-on-a-stick)
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30
+ exit
+
+end
+write memory
+
+! ============================================
+! Verification commands
+! ============================================
+! show vlan brief
+! show interfaces trunk
