@@ -4,9 +4,6 @@ Two switches (**SW1**, **SW2**) connected by a trunk, three VLANs (10, 20, 30) s
 both switches, and a single router (**R1**) doing inter-VLAN routing over one physical
 link to SW2 using **router-on-a-stick** (subinterfaces + 802.1Q).
 
-## Topology
-
-![VLAN Trunking Topology Diagram](topology/topology-diagram.png)
 
 ## Repo structure
 
